@@ -1,0 +1,9 @@
+{
+    "blockNamespace": "acf",
+    "createRegistrationFile": true,
+    "registrationFileDir": "blocks",
+    "blocksDirPath": "blocks",
+    "blockAssets": true,
+    "groupBlockAssets": 1,
+    "blockSlugify": true
+}

@@ -1,0 +1,14 @@
+{
+    "name": "linkrenderssafari",
+    "title": "linkrenderssafari",
+    "description": "Testing acf link render on Safari",
+    "category": "theme",
+    "apiVersion": 2,
+    "acf": {
+        "mode": "edit",
+        "renderTemplate": "blocks\/linkrenderssafari\/render.php"
+    },
+    "supports": {
+        "anchor": true
+    }
+}
