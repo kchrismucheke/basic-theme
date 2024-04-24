@@ -34,6 +34,21 @@ add_theme_support( 'post-thumbnails' );
 // Image Sizes
 add_image_size( 'small', 600, 600, false );
 
+function fix_post_id_on_preview( $null, $post_id ) {
+	if ( is_preview() ) {
+		return get_the_ID();
+	} else {
+		$acf_post_id = isset( $post_id->ID ) ? $post_id->ID : $post_id;
+
+		if ( ! empty( $acf_post_id ) ) {
+			return $acf_post_id;
+		} else {
+			return $null;
+		}
+	}
+}
+add_filter( 'acf/pre_load_post_id', 'fix_post_id_on_preview', 10, 2 );
+
 function register_acf_blocks() {
 	/**
 	 * We register our block's with WordPress's handy
@@ -214,16 +229,18 @@ function treatment_fee_icons( $atts ) {
 add_shortcode( 'fee_icons', 'treatment_fee_icons' );
 
 function acf_field_shortcode( $atts ) {
-    // Extract attributes from the shortcode
-    $atts = shortcode_atts( array(
-        'field' => '',
-        'post_id' => 'options',
-    ), $atts, 'acf_field' );
-    
-    // Get the field value
-    $field_value = get_field( $atts['field'], $atts['post_id'] );
-    
-    // Return the field value
-    return $field_value;
+	// Extract attributes from the shortcode
+	$atts = shortcode_atts( array(
+		'field' => '',
+		'post_id' => 'options',
+	), $atts, 'acf_field' );
+
+	// Get the field value
+	$field_value = get_field( $atts['field'], $atts['post_id'] );
+
+	// Return the field value
+	return $field_value;
 }
 add_shortcode( 'acf_field', 'acf_field_shortcode' );
+
+add_filter( 'acf/field_group/disable_field_settings_tabs', '__return_true' );
